@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --color-blush: #f8e8e0;
+  --color-blush-dark: #e8c4b8;
+  --color-sage: #a8b5a0;
+  --color-sage-dark: #7a8a70;
+  --color-gold: #c9a96e;
+  --color-gold-dark: #a88a50;
+  --color-ivory: #faf8f5;
+  --color-charcoal: #2d2d2d;
+  --color-warm-gray: #6b6060;
+  --color-rose: #d4847c;
+  --color-rose-dark: #b86860;
+  --color-lavender: #c4b5d4;
+  --color-dusty-blue: #8ba4b8;
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+}
+
+/* Drag ghost styling */
+.drag-ghost {
+  opacity: 0.5;
+  background: var(--color-blush);
+  border-radius: 0.5rem;
+}
+
+.drag-over {
+  border: 2px dashed var(--color-sage);
+  background: rgba(168, 181, 160, 0.1);
+}
+
+/* Scrollbar styling for columns */
+.board-columns::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board-columns::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.board-columns::-webkit-scrollbar-thumb {
+  background-color: var(--color-blush-dark);
+  border-radius: 4px;
+}
+
+/* Card animation */
+.card-enter-active,
+.card-leave-active {
+  transition: all 0.3s ease;
+}
+
+.card-enter-from,
+.card-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}

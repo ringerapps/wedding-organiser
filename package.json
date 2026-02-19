@@ -1,0 +1,27 @@
+{
+  "name": "wedding-organiser",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "nuxt": "^4.3.1",
+    "vue": "^3.5.28",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@nuxt/test-utils": "^4.0.0",
+    "@tailwindcss/postcss": "^4.2.0",
+    "@vue/test-utils": "^2.4.6",
+    "autoprefixer": "^10.4.24",
+    "happy-dom": "^20.6.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.2.0",
+    "vitest": "^4.0.18"
+  }
+}
