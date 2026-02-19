@@ -1,48 +1,50 @@
 <script setup>
-import { PRIORITY_LABELS, CATEGORIES, STATUS_COLUMNS } from '~/constants/board'
+import { CATEGORIES } from '~/constants/board'
 
 const props = defineProps({
-  card: { type: Object, default: null },
-  columnId: { type: String, default: '' },
+  item: { type: Object, default: null },
 })
 
-const emit = defineEmits(['close', 'save', 'move'])
+const emit = defineEmits(['close', 'save'])
 
 const form = reactive({
-  title: '',
-  priority: 'medium',
-  category: 'logistics',
-  dueDate: '',
+  name: '',
+  category: 'venue',
+  estimated: '',
+  actual: '',
+  vendor: '',
   notes: '',
+  paid: false,
 })
 
-const moveTarget = ref('')
-
 watch(
-  () => props.card,
-  (card) => {
-    if (card) {
-      form.title = card.title
-      form.priority = card.priority
-      form.category = card.category || 'logistics'
-      form.dueDate = card.dueDate || ''
-      form.notes = card.notes || ''
+  () => props.item,
+  (item) => {
+    if (item) {
+      form.name = item.name
+      form.category = item.category
+      form.estimated = item.estimated || ''
+      form.actual = item.actual || ''
+      form.vendor = item.vendor || ''
+      form.notes = item.notes || ''
+      form.paid = item.paid || false
     }
   },
   { immediate: true }
 )
 
 function save() {
-  if (!form.title.trim()) return
-  emit('save', { ...form, title: form.title.trim() })
-  if (moveTarget.value && moveTarget.value !== props.columnId) {
-    emit('move', moveTarget.value)
-  }
+  if (!form.name.trim()) return
+  emit('save', {
+    name: form.name.trim(),
+    category: form.category,
+    estimated: Number(form.estimated) || 0,
+    actual: Number(form.actual) || 0,
+    vendor: form.vendor,
+    notes: form.notes,
+    paid: form.paid,
+  })
 }
-
-const otherColumns = computed(() =>
-  STATUS_COLUMNS.filter((col) => col.id !== props.columnId)
-)
 </script>
 
 <template>
@@ -52,26 +54,20 @@ const otherColumns = computed(() =>
       @click.self="emit('close')"
     >
       <div class="bg-white rounded-xl shadow-xl max-w-md w-full overflow-hidden">
-        <!-- Header -->
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-bold text-charcoal">Edit Task</h3>
-          </div>
-          <button
-            class="text-warm-gray hover:text-charcoal text-xl p-1"
-            @click="emit('close')"
-          >
-            &times;
-          </button>
+          <h3 class="font-serif text-lg font-bold text-charcoal">
+            {{ item ? 'Edit Expense' : 'Add Expense' }}
+          </h3>
+          <button class="text-warm-gray hover:text-charcoal text-xl p-1" @click="emit('close')">&times;</button>
         </div>
 
-        <!-- Form -->
         <div class="px-6 py-4 space-y-4">
           <div>
-            <label class="block text-xs font-medium text-warm-gray mb-1">Task Name</label>
+            <label class="block text-xs font-medium text-warm-gray mb-1">Name</label>
             <input
-              v-model="form.title"
+              v-model="form.name"
               class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage"
+              placeholder="e.g. Venue deposit"
               @keydown.enter="save"
             />
           </div>
@@ -89,38 +85,35 @@ const otherColumns = computed(() =>
               </select>
             </div>
             <div class="flex-1">
-              <label class="block text-xs font-medium text-warm-gray mb-1">Priority</label>
-              <select
-                v-model="form.priority"
+              <label class="block text-xs font-medium text-warm-gray mb-1">Vendor</label>
+              <input
+                v-model="form.vendor"
                 class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sage/30"
-              >
-                <option v-for="(label, key) in PRIORITY_LABELS" :key="key" :value="key">
-                  {{ label }}
-                </option>
-              </select>
+                placeholder="Optional"
+              />
             </div>
           </div>
 
           <div class="flex gap-4">
             <div class="flex-1">
-              <label class="block text-xs font-medium text-warm-gray mb-1">Due Date</label>
+              <label class="block text-xs font-medium text-warm-gray mb-1">Estimated ($)</label>
               <input
-                v-model="form.dueDate"
-                type="date"
+                v-model="form.estimated"
+                type="number"
+                min="0"
                 class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sage/30"
+                placeholder="0"
               />
             </div>
             <div class="flex-1">
-              <label class="block text-xs font-medium text-warm-gray mb-1">Move to</label>
-              <select
-                v-model="moveTarget"
+              <label class="block text-xs font-medium text-warm-gray mb-1">Actual ($)</label>
+              <input
+                v-model="form.actual"
+                type="number"
+                min="0"
                 class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sage/30"
-              >
-                <option value="">Stay here</option>
-                <option v-for="col in otherColumns" :key="col.id" :value="col.id">
-                  {{ col.icon }} {{ col.title }}
-                </option>
-              </select>
+                placeholder="0"
+              />
             </div>
           </div>
 
@@ -128,14 +121,17 @@ const otherColumns = computed(() =>
             <label class="block text-xs font-medium text-warm-gray mb-1">Notes</label>
             <textarea
               v-model="form.notes"
-              rows="3"
+              rows="2"
               class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sage/30 resize-none"
-              placeholder="Additional details..."
             />
           </div>
+
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input v-model="form.paid" type="checkbox" class="rounded border-gray-300 text-sage focus:ring-sage" />
+            <span class="text-sm text-charcoal">Mark as paid</span>
+          </label>
         </div>
 
-        <!-- Actions -->
         <div class="px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end gap-2">
           <button
             class="px-4 py-2 text-sm rounded-lg border border-gray-200 hover:bg-white transition-colors"
@@ -147,7 +143,7 @@ const otherColumns = computed(() =>
             class="px-4 py-2 text-sm rounded-lg bg-sage text-white hover:bg-sage-dark transition-colors font-medium"
             @click="save"
           >
-            Save Changes
+            {{ item ? 'Save Changes' : 'Add Expense' }}
           </button>
         </div>
       </div>

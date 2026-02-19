@@ -1,52 +1,18 @@
-export const DEFAULT_COLUMNS = [
-  {
-    id: 'venue',
-    title: 'Venue & Location',
-    color: '#d4847c',
-    icon: '🏛️',
-  },
-  {
-    id: 'catering',
-    title: 'Catering & Cake',
-    color: '#c9a96e',
-    icon: '🍰',
-  },
-  {
-    id: 'attire',
-    title: 'Attire & Beauty',
-    color: '#c4b5d4',
-    icon: '👗',
-  },
-  {
-    id: 'flowers',
-    title: 'Flowers & Decor',
-    color: '#a8b5a0',
-    icon: '💐',
-  },
-  {
-    id: 'photography',
-    title: 'Photo & Video',
-    color: '#8ba4b8',
-    icon: '📸',
-  },
-  {
-    id: 'music',
-    title: 'Music & Entertainment',
-    color: '#e8c4b8',
-    icon: '🎵',
-  },
-  {
-    id: 'guests',
-    title: 'Guest List & RSVPs',
-    color: '#d4847c',
-    icon: '💌',
-  },
-  {
-    id: 'logistics',
-    title: 'Logistics & Admin',
-    color: '#6b6060',
-    icon: '📋',
-  },
+export const STATUS_COLUMNS = [
+  { id: 'todo', title: 'To Do', icon: '📋', color: '#8ba4b8' },
+  { id: 'in-progress', title: 'In Progress', icon: '🔨', color: '#c9a96e' },
+  { id: 'done', title: 'Done', icon: '✅', color: '#a8b5a0' },
+]
+
+export const CATEGORIES = [
+  { id: 'venue', label: 'Venue', color: '#d4847c', icon: '🏛️' },
+  { id: 'catering', label: 'Catering', color: '#c9a96e', icon: '🍰' },
+  { id: 'attire', label: 'Attire', color: '#c4b5d4', icon: '👗' },
+  { id: 'flowers', label: 'Flowers', color: '#a8b5a0', icon: '💐' },
+  { id: 'photography', label: 'Photo', color: '#8ba4b8', icon: '📸' },
+  { id: 'music', label: 'Music', color: '#e8c4b8', icon: '🎵' },
+  { id: 'guests', label: 'Guests', color: '#d4847c', icon: '💌' },
+  { id: 'logistics', label: 'Logistics', color: '#6b6060', icon: '📋' },
 ]
 
 export const CARD_PRIORITIES = {
@@ -67,53 +33,61 @@ export const PRIORITY_COLORS = {
   low: 'bg-green-100 text-green-700 border-green-300',
 }
 
-export const SAMPLE_CARDS = {
-  venue: [
-    { title: 'Research venue options', priority: 'high', dueDate: '', notes: 'Consider indoor/outdoor, capacity, parking', done: false },
-    { title: 'Book ceremony site', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Book reception venue', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Arrange site visits', priority: 'medium', dueDate: '', notes: '', done: false },
-  ],
-  catering: [
-    { title: 'Choose caterer', priority: 'high', dueDate: '', notes: 'Get quotes from at least 3', done: false },
-    { title: 'Plan menu & tastings', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Order wedding cake', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Arrange bar service', priority: 'low', dueDate: '', notes: '', done: false },
-  ],
-  attire: [
-    { title: 'Shop for wedding dress', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Groom suit/tuxedo', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Bridesmaid dresses', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Book hair & makeup trial', priority: 'medium', dueDate: '', notes: '', done: false },
-  ],
-  flowers: [
-    { title: 'Choose florist', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Select bouquet style', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Table centrepieces', priority: 'low', dueDate: '', notes: '', done: false },
-    { title: 'Ceremony arch decor', priority: 'low', dueDate: '', notes: '', done: false },
-  ],
-  photography: [
-    { title: 'Book photographer', priority: 'high', dueDate: '', notes: 'Check portfolio and reviews', done: false },
-    { title: 'Book videographer', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Create shot list', priority: 'low', dueDate: '', notes: '', done: false },
-  ],
-  music: [
-    { title: 'Book DJ or band', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Plan first dance song', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Create ceremony playlist', priority: 'low', dueDate: '', notes: '', done: false },
-  ],
-  guests: [
-    { title: 'Compile guest list', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Send save-the-dates', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Design & send invitations', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Track RSVPs', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Plan seating arrangement', priority: 'low', dueDate: '', notes: '', done: false },
-  ],
-  logistics: [
-    { title: 'Set budget', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Book officiant', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Apply for marriage licence', priority: 'high', dueDate: '', notes: '', done: false },
-    { title: 'Arrange transport', priority: 'medium', dueDate: '', notes: '', done: false },
-    { title: 'Book honeymoon', priority: 'low', dueDate: '', notes: '', done: false },
-  ],
+export const SAMPLE_CARDS = [
+  { title: 'Research venue options', priority: 'high', category: 'venue', notes: 'Consider indoor/outdoor, capacity, parking' },
+  { title: 'Book ceremony site', priority: 'high', category: 'venue', notes: '' },
+  { title: 'Book reception venue', priority: 'high', category: 'venue', notes: '' },
+  { title: 'Arrange site visits', priority: 'medium', category: 'venue', notes: '' },
+  { title: 'Choose caterer', priority: 'high', category: 'catering', notes: 'Get quotes from at least 3' },
+  { title: 'Plan menu & tastings', priority: 'medium', category: 'catering', notes: '' },
+  { title: 'Order wedding cake', priority: 'medium', category: 'catering', notes: '' },
+  { title: 'Arrange bar service', priority: 'low', category: 'catering', notes: '' },
+  { title: 'Shop for wedding dress', priority: 'high', category: 'attire', notes: '' },
+  { title: 'Groom suit/tuxedo', priority: 'high', category: 'attire', notes: '' },
+  { title: 'Bridesmaid dresses', priority: 'medium', category: 'attire', notes: '' },
+  { title: 'Book hair & makeup trial', priority: 'medium', category: 'attire', notes: '' },
+  { title: 'Choose florist', priority: 'medium', category: 'flowers', notes: '' },
+  { title: 'Select bouquet style', priority: 'medium', category: 'flowers', notes: '' },
+  { title: 'Table centrepieces', priority: 'low', category: 'flowers', notes: '' },
+  { title: 'Ceremony arch decor', priority: 'low', category: 'flowers', notes: '' },
+  { title: 'Book photographer', priority: 'high', category: 'photography', notes: 'Check portfolio and reviews' },
+  { title: 'Book videographer', priority: 'medium', category: 'photography', notes: '' },
+  { title: 'Create shot list', priority: 'low', category: 'photography', notes: '' },
+  { title: 'Book DJ or band', priority: 'high', category: 'music', notes: '' },
+  { title: 'Plan first dance song', priority: 'medium', category: 'music', notes: '' },
+  { title: 'Create ceremony playlist', priority: 'low', category: 'music', notes: '' },
+  { title: 'Compile guest list', priority: 'high', category: 'guests', notes: '' },
+  { title: 'Send save-the-dates', priority: 'high', category: 'guests', notes: '' },
+  { title: 'Design & send invitations', priority: 'medium', category: 'guests', notes: '' },
+  { title: 'Track RSVPs', priority: 'medium', category: 'guests', notes: '' },
+  { title: 'Plan seating arrangement', priority: 'low', category: 'guests', notes: '' },
+  { title: 'Set budget', priority: 'high', category: 'logistics', notes: '' },
+  { title: 'Book officiant', priority: 'high', category: 'logistics', notes: '' },
+  { title: 'Apply for marriage licence', priority: 'high', category: 'logistics', notes: '' },
+  { title: 'Arrange transport', priority: 'medium', category: 'logistics', notes: '' },
+  { title: 'Book honeymoon', priority: 'low', category: 'logistics', notes: '' },
+]
+
+export const RSVP_STATUSES = {
+  PENDING: 'pending',
+  ACCEPTED: 'accepted',
+  DECLINED: 'declined',
 }
+
+export const MEAL_OPTIONS = ['Standard', 'Vegetarian', 'Vegan', 'Gluten-free', 'Other']
+
+export const VENDOR_STATUSES = {
+  RESEARCHING: 'researching',
+  CONTACTED: 'contacted',
+  QUOTED: 'quoted',
+  BOOKED: 'booked',
+}
+
+export const WEDDING_STYLES = [
+  { id: 'classic', label: 'Classic & Elegant', icon: '🏰' },
+  { id: 'rustic', label: 'Rustic & Natural', icon: '🌿' },
+  { id: 'modern', label: 'Modern & Minimal', icon: '✨' },
+  { id: 'bohemian', label: 'Bohemian & Free', icon: '🌸' },
+  { id: 'romantic', label: 'Romantic & Dreamy', icon: '💕' },
+  { id: 'vintage', label: 'Vintage & Retro', icon: '🎭' },
+]

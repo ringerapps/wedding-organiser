@@ -1,13 +1,15 @@
 <script setup>
-import { useBoard } from '~/composables/useBoard'
+import { useWeddingStore } from '~/stores/wedding'
+import { useBoardStore } from '~/stores/board'
 
-const { getProgress, resetBoard } = useBoard()
+const weddingStore = useWeddingStore()
+const boardStore = useBoardStore()
+
 const showResetConfirm = ref(false)
-
-const progress = computed(() => getProgress())
+const progress = computed(() => boardStore.progress)
 
 function confirmReset() {
-  resetBoard()
+  boardStore.resetBoard()
   showResetConfirm.value = false
 }
 </script>
@@ -16,24 +18,33 @@ function confirmReset() {
   <header class="bg-white/80 backdrop-blur-sm border-b border-blush-dark/20 sticky top-0 z-50">
     <div class="max-w-full mx-auto px-4 sm:px-6 py-3">
       <div class="flex items-center justify-between">
+        <!-- Logo -->
         <div class="flex items-center gap-3">
-          <div class="text-3xl">💍</div>
-          <div>
-            <h1 class="font-serif text-xl sm:text-2xl font-bold text-charcoal tracking-tight">
-              Wedding Planner
-            </h1>
-            <p class="text-xs text-warm-gray hidden sm:block">Organise your perfect day</p>
-          </div>
+          <NuxtLink to="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="text-3xl">💍</div>
+            <div>
+              <h1 class="font-serif text-xl sm:text-2xl font-bold text-charcoal tracking-tight">
+                Wedding Planner
+              </h1>
+              <p v-if="weddingStore.coupleNames" class="text-xs text-warm-gray hidden sm:block">
+                {{ weddingStore.coupleNames }}
+              </p>
+              <p v-else class="text-xs text-warm-gray hidden sm:block">Organise your perfect day</p>
+            </div>
+          </NuxtLink>
         </div>
 
-        <div class="flex items-center gap-4">
+        <!-- Navigation -->
+        <AppNav />
+
+        <div class="flex items-center gap-3">
           <!-- Progress -->
-          <div class="hidden sm:flex items-center gap-3">
+          <div class="hidden lg:flex items-center gap-3">
             <div class="text-sm text-warm-gray">
               <span class="font-semibold text-sage-dark">{{ progress.done }}</span>
               / {{ progress.total }} tasks
             </div>
-            <div class="w-32 h-2 bg-blush rounded-full overflow-hidden">
+            <div class="w-24 h-2 bg-blush rounded-full overflow-hidden">
               <div
                 class="h-full bg-sage rounded-full transition-all duration-500"
                 :style="{ width: progress.percent + '%' }"
@@ -44,7 +55,7 @@ function confirmReset() {
 
           <!-- Reset -->
           <button
-            class="text-sm text-warm-gray hover:text-rose transition-colors px-2 py-1 rounded"
+            class="text-sm text-warm-gray hover:text-rose transition-colors px-2 py-1 rounded hidden sm:block"
             @click="showResetConfirm = true"
           >
             Reset
@@ -52,9 +63,9 @@ function confirmReset() {
         </div>
       </div>
 
-      <!-- Mobile progress -->
-      <div class="sm:hidden mt-2 flex items-center gap-2">
-        <div class="flex-1 h-2 bg-blush rounded-full overflow-hidden">
+      <!-- Mobile progress bar -->
+      <div class="lg:hidden mt-2 flex items-center gap-2">
+        <div class="flex-1 h-1.5 bg-blush rounded-full overflow-hidden">
           <div
             class="h-full bg-sage rounded-full transition-all duration-500"
             :style="{ width: progress.percent + '%' }"
