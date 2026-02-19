@@ -7,10 +7,6 @@ const editingCard = ref(null)
 const editingColumnId = ref(null)
 const categoryFilter = ref('')
 
-onMounted(() => {
-  boardStore.init()
-})
-
 function handleEditCard(columnId, card) {
   editingCard.value = card
   editingColumnId.value = columnId

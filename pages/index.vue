@@ -13,10 +13,6 @@ const guestStore = useGuestStore()
 const timelineStore = useTimelineStore()
 const vendorStore = useVendorStore()
 
-onMounted(() => {
-  boardStore.init()
-})
-
 const progress = computed(() => boardStore.progress)
 
 function formatCurrency(n) {
